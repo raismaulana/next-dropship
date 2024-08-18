@@ -8,30 +8,30 @@ import { SoftDeletableEntity } from "@medusajs/medusa"
 import { generateEntityId } from "@medusajs/medusa/dist/utils"
   
 @Entity()
-export class Partner extends SoftDeletableEntity {
+export class PartnershipPackage extends SoftDeletableEntity {
     @PrimaryColumn({ type: "varchar" })
     id: string
 
     @Column({ type: "varchar" })
-    email: string
+    name: string
 
     @Column({ type: "varchar" })
-    fullName: string
+    description: string
 
-    @Column({ type: "varchar" })
-    passwordHash: string
+    @Column({ type: "int4" })
+    amount: number
 
-    @Column({ type: "varchar", nullable: true })
-    phone: string | null
+    @Column({ type: "int4" })
+    day: number
 
-    @Column({ type: "varchar" })
-    referenceCode: string
+    @Column({ type: "bool" })
+    isVisible: boolean
 
     @Column( { type: "jsonb", nullable: true })
     metadata: Record<string, unknown> | null
 
     @BeforeInsert()
     private beforeInsert(): void {
-        this.id = generateEntityId(this.id, "partner")
+        this.id = generateEntityId(this.id, "psp")
     }
 }

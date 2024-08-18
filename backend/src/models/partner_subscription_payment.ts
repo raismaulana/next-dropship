@@ -2,36 +2,41 @@ import {
     BeforeInsert, 
     Column, 
     Entity, 
+    ManyToOne, 
     PrimaryColumn,
   } from "typeorm"
 import { SoftDeletableEntity } from "@medusajs/medusa"
 import { generateEntityId } from "@medusajs/medusa/dist/utils"
+import { PartnerSubscription } from "./partner_subscription"
   
 @Entity()
-export class Partner extends SoftDeletableEntity {
+export class PartnerSubscriptionPayment extends SoftDeletableEntity {
     @PrimaryColumn({ type: "varchar" })
     id: string
 
-    @Column({ type: "varchar" })
-    email: string
+    @ManyToOne( () => PartnerSubscription )
+    name: PartnerSubscription
+
+    @Column({ type: "timestamptz" })
+    dueDate: Date
+
+    @Column({ type: "int4" })
+    amount: Date
 
     @Column({ type: "varchar" })
-    fullName: string
+    channel: string
 
     @Column({ type: "varchar" })
-    passwordHash: string
-
-    @Column({ type: "varchar", nullable: true })
-    phone: string | null
+    paidAt: Date
 
     @Column({ type: "varchar" })
-    referenceCode: string
+    status: string
 
     @Column( { type: "jsonb", nullable: true })
     metadata: Record<string, unknown> | null
 
     @BeforeInsert()
     private beforeInsert(): void {
-        this.id = generateEntityId(this.id, "partner")
+        this.id = generateEntityId(this.id, "psb")
     }
 }
