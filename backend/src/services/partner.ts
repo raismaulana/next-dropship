@@ -12,3 +12,5 @@ class PartnerService extends TransactionBaseService {
     }
         
 }
+
+export default PartnerService;
